@@ -1,0 +1,53 @@
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\VRExpansionPlugin\Definitions.VRExpansionPlugin.h
+C:/Users/gilli/TaleOfFallenStars/Plugins/VRExpansion/VRExpansionPlugin/Intermediate/Build/Win64/UE4Editor/Inc/VRExpansionPlugin/BucketUpdateSubsystem.gen.cpp
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Source\VRExpansionPlugin/Public/Misc/BucketUpdateSubsystem.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\VRExpansionPlugin\BucketUpdateSubsystem.generated.h
+C:/Users/gilli/TaleOfFallenStars/Plugins/VRExpansion/VRExpansionPlugin/Intermediate/Build/Win64/UE4Editor/Inc/VRExpansionPlugin/GripMotionControllerComponent.gen.cpp
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Source\VRExpansionPlugin/Public/GripMotionControllerComponent.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\HeadMountedDisplay\Public\IMotionController.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Public\SceneViewExtension.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Source\VRExpansionPlugin\Public\VRBPDatatypes.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\VRExpansionPlugin\VRBPDatatypes.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\HeadMountedDisplay\Public\MotionControllerComponent.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\HeadMountedDisplay\Public\LateUpdateManager.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\HeadMountedDisplay\Public\IIdentifiableXRDevice.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\HeadMountedDisplay\IIdentifiableXRDevice.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\HeadMountedDisplay\MotionControllerComponent.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\HeadMountedDisplay\Public\IXRTrackingSystem.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\HeadMountedDisplay\Public\HeadMountedDisplayTypes.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\HeadMountedDisplay\HeadMountedDisplayTypes.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\HeadMountedDisplay\Public\IXRInput.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Source\VRExpansionPlugin\Public\VRGripInterface.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Source\VRExpansionPlugin\Public\GripScripts/VRGripScriptBase.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Public\Net/UnrealNetwork.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\VRExpansionPlugin\VRGripScriptBase.generated.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\VRExpansionPlugin\VRGripInterface.generated.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Source\VRExpansionPlugin\Public\VRGlobalSettings.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\GameFramework/PlayerInput.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Public\GestureRecognizer.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Public\KeyState.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\PlayerInput.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\GameFramework/InputSettings.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\InputSettings.generated.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Source\VRExpansionPlugin\Public\GripScripts/GS_GunTools.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Source\VRExpansionPlugin\Public\GripScripts/GS_Default.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\GameFramework/WorldSettings.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\GameFramework/DamageType.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DamageType.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\GameFramework/Info.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Info.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\Sound/AudioVolume.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\GameFramework/Volume.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\Volume.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\Engine\Classes\Sound\ReverbSettings.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ReverbSettings.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\AudioVolume.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\CoreUObject\Public\UObject/ConstructorHelpers.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\WorldSettings.generated.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\VRExpansionPlugin\GS_Default.generated.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\VRExpansionPlugin\GS_GunTools.generated.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\VRExpansionPlugin\VRGlobalSettings.generated.h
+C:\Program Files\Epic Games\UE_4.25\Engine\Source\Runtime\HeadMountedDisplay\Public\XRMotionControllerBase.h
+C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Inc\VRExpansionPlugin\GripMotionControllerComponent.generated.h
