@@ -172,11 +172,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GripMotionController")
 	bool bOffsetByHMD;
 
-	// If true, this component will not move itself in its tick, it will instead allow the character movement component to move it (unless the CMC is inactive, then it will go back to self managing)
-	// This will make it fall inside of the deferred updates of the CMC
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "GripMotionController")
-		bool bUpdateInCharacterMovement;
-
 	UPROPERTY()
 		TWeakObjectPtr<AVRBaseCharacter> AttachChar;
 	void UpdateTracking(float DeltaTime);
@@ -239,8 +234,8 @@ public:
 	virtual void BeginPlay() override;
 
 	/** Post-physics tick function for this character */
-	UPROPERTY()
-		FTickFunction PostPhysicsTickFunction;
+	//UPROPERTY()
+	//	FTickFunction PostPhysicsTickFunction;
 
 protected:
 	//~ Begin UActorComponent Interface.
@@ -914,6 +909,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GripMotionController")
 		void GetPhysicsVelocities(const FBPActorGripInformation &Grip, FVector &AngularVelocity, FVector &LinearVelocity);
 
+	// Get the physics constraint force of a simulating grip
+	UFUNCTION(BlueprintCallable, Category = "GripMotionController")
+		bool GetPhysicsConstraintForce(const FBPActorGripInformation& Grip, FVector& AngularForce, FVector& LinearForce);
+
 	// Get the root components mass of a grip
 	UFUNCTION(BlueprintPure, Category = "GripMotionController")
 		void GetGripMass(const FBPActorGripInformation& Grip, float& Mass);
@@ -926,6 +925,14 @@ public:
 			EBPVRResultSwitch &Result,
 			bool bIsPaused = false,
 			bool bNoConstraintWhenPaused = false
+		);
+
+	// Sets whether an active hybrid grip is locked to its soft setting (is not replicated by default as it is likely you will want to pass variables with this setting).
+	UFUNCTION(BlueprintCallable, Category = "GripMotionController", meta = (ExpandEnumAsExecs = "Result"))
+		void SetGripHybridLock(
+			const FBPActorGripInformation& Grip,
+			EBPVRResultSwitch& Result,
+			bool bIsLocked = false
 		);
 
 	// Sets the transform to stay at during pause

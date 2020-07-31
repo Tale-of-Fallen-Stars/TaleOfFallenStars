@@ -1,6 +1,7 @@
 // Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
 
 #include "VRBaseCharacter.h"
+#include "VRPlayerController.h"
 #include "NavigationSystem.h"
 #include "VRPathFollowingComponent.h"
 //#include "Runtime/Engine/Private/EnginePrivate.h"
@@ -73,7 +74,7 @@ AVRBaseCharacter::AVRBaseCharacter(const FObjectInitializer& ObjectInitializer)
 		LeftMotionController->SetTrackingMotionSource(FXRMotionControllerBase::LeftHandSourceId);
 		//LeftMotionController->Hand = EControllerHand::Left;
 		LeftMotionController->bOffsetByHMD = false;
-		LeftMotionController->bUpdateInCharacterMovement = true;
+		//LeftMotionController->bUpdateInCharacterMovement = true;
 		// Keep the controllers ticking after movement
 		LeftMotionController->AddTickPrerequisiteComponent(GetCharacterMovement());
 		LeftMotionController->OverrideSendTransform = &AVRBaseCharacter::Server_SendTransformLeftController;
@@ -87,7 +88,7 @@ AVRBaseCharacter::AVRBaseCharacter(const FObjectInitializer& ObjectInitializer)
 		RightMotionController->SetTrackingMotionSource(FXRMotionControllerBase::RightHandSourceId);
 		//RightMotionController->Hand = EControllerHand::Right;
 		RightMotionController->bOffsetByHMD = false;
-		RightMotionController->bUpdateInCharacterMovement = true;
+		//RightMotionController->bUpdateInCharacterMovement = true;
 		// Keep the controllers ticking after movement
 		RightMotionController->AddTickPrerequisiteComponent(GetCharacterMovement());
 		RightMotionController->OverrideSendTransform = &AVRBaseCharacter::Server_SendTransformRightController;
@@ -113,10 +114,78 @@ AVRBaseCharacter::AVRBaseCharacter(const FObjectInitializer& ObjectInitializer)
 	bFlagTeleported = false;
 }
 
+ void AVRBaseCharacter::PossessedBy(AController* NewController)
+ {
+	 Super::PossessedBy(NewController);
+	 OwningVRPlayerController = Cast<AVRPlayerController>(Controller);
+ }
+
+void AVRBaseCharacter::OnRep_Controller()
+{
+	Super::OnRep_Controller();
+	OwningVRPlayerController = Cast<AVRPlayerController>(Controller);
+}
+
 void AVRBaseCharacter::OnRep_PlayerState()
 {
 	OnPlayerStateReplicated_Bind.Broadcast(GetPlayerState());
 	Super::OnRep_PlayerState();
+}
+
+void AVRBaseCharacter::PostInitializeComponents()
+{
+	QUICK_SCOPE_CYCLE_COUNTER(STAT_Character_PostInitComponents);
+
+	Super::Super::PostInitializeComponents();
+
+	if (!IsPendingKill())
+	{
+		if (NetSmoother)
+		{
+			CacheInitialMeshOffset(NetSmoother->GetRelativeLocation(), NetSmoother->GetRelativeRotation());
+		}
+
+		if (USkeletalMeshComponent * myMesh = GetMesh())
+		{
+			// force animation tick after movement component updates
+			if (myMesh->PrimaryComponentTick.bCanEverTick && GetMovementComponent())
+			{
+				myMesh->PrimaryComponentTick.AddPrerequisite(GetMovementComponent(), GetMovementComponent()->PrimaryComponentTick);
+			}
+		}
+
+		if (GetCharacterMovement() && GetCapsuleComponent())
+		{
+			GetCharacterMovement()->UpdateNavAgent(*GetCapsuleComponent());
+		}
+
+		if (Controller == nullptr && GetNetMode() != NM_Client)
+		{
+			if (GetCharacterMovement() && GetCharacterMovement()->bRunPhysicsWithNoController)
+			{				
+				GetCharacterMovement()->SetDefaultMovementMode();
+			}
+		}
+	}
+}
+
+void AVRBaseCharacter::CacheInitialMeshOffset(FVector MeshRelativeLocation, FRotator MeshRelativeRotation)
+{
+	BaseTranslationOffset = MeshRelativeLocation;
+	BaseRotationOffset = MeshRelativeRotation.Quaternion();
+
+#if ENABLE_NAN_DIAGNOSTIC
+	if (BaseRotationOffset.ContainsNaN())
+	{
+		logOrEnsureNanError(TEXT("ACharacter::PostInitializeComponents detected NaN in BaseRotationOffset! (%s)"), *BaseRotationOffset.ToString());
+	}
+
+	const FRotator LocalRotation = Mesh->GetRelativeRotation();
+	if (LocalRotation.ContainsNaN())
+	{
+		logOrEnsureNanError(TEXT("ACharacter::PostInitializeComponents detected NaN in Mesh->RelativeRotation! (%s)"), *LocalRotation.ToString());
+	}
+#endif
 }
 
 void AVRBaseCharacter::GetLifetimeReplicatedProps(TArray< class FLifetimeProperty > & OutLifetimeProps) const
@@ -246,9 +315,9 @@ void AVRBaseCharacter::NotifyOfTeleport(bool bRegisterAsTeleport)
 		if (GetNetMode() < ENetMode::NM_Client)
 			bFlagTeleported = true;
 
-		if (UVRBaseCharacterMovementComponent * moveComp = Cast<UVRBaseCharacterMovementComponent>(GetMovementComponent()))
+		if (VRMovementReference)
 		{
-			moveComp->bNotifyTeleported = true;
+			VRMovementReference->bNotifyTeleported = true;
 		}
 	}
 
@@ -328,9 +397,9 @@ void AVRBaseCharacter::OnRep_SeatedCharInfo()
 				}
 				else
 				{
-					if (UVRBaseCharacterMovementComponent * charMovement = Cast<UVRBaseCharacterMovementComponent>(GetMovementComponent()))
+					if (VRMovementReference)
 					{
-						charMovement->SetMovementMode(MOVE_Custom, (uint8)EVRCustomMovementMode::VRMOVE_Seated);
+						VRMovementReference->SetMovementMode(MOVE_Custom, (uint8)EVRCustomMovementMode::VRMOVE_Seated);
 					}
 				}
 			}
@@ -349,9 +418,9 @@ void AVRBaseCharacter::OnRep_SeatedCharInfo()
 			}
 			else
 			{
-				if (UVRBaseCharacterMovementComponent * charMovement = Cast<UVRBaseCharacterMovementComponent>(GetMovementComponent()))
+				if (VRMovementReference)
 				{
-					charMovement->ApplyReplicatedMovementMode(SeatInformation.PostSeatedMovementMode);
+					VRMovementReference->ApplyReplicatedMovementMode(SeatInformation.PostSeatedMovementMode);
 				}
 			}
 		}
@@ -374,7 +443,7 @@ void AVRBaseCharacter::InitSeatedModeTransition()
 
 			if (this->GetLocalRole() == ROLE_SimulatedProxy)
 			{
-				if (UVRBaseCharacterMovementComponent * charMovement = Cast<UVRBaseCharacterMovementComponent>(GetMovementComponent()))
+				if (VRMovementReference)
 				{
 					//charMovement->DisableMovement();
 					//charMovement->SetComponentTickEnabled(false);
@@ -394,7 +463,7 @@ void AVRBaseCharacter::InitSeatedModeTransition()
 			}
 			else
 			{
-				if (UVRBaseCharacterMovementComponent * charMovement = Cast<UVRBaseCharacterMovementComponent>(GetMovementComponent()))
+				if (VRMovementReference)
 				{
 					//charMovement->DisableMovement();
 					//charMovement->SetComponentTickEnabled(false);
@@ -403,13 +472,13 @@ void AVRBaseCharacter::InitSeatedModeTransition()
 
 					if (this->GetLocalRole() == ROLE_AutonomousProxy)
 					{
-						FNetworkPredictionData_Client_Character* ClientData = charMovement->GetPredictionData_Client_Character();
+						FNetworkPredictionData_Client_Character* ClientData = VRMovementReference->GetPredictionData_Client_Character();
 						check(ClientData);
 
 						if (ClientData->SavedMoves.Num())
 						{
 							// Ack our most recent move, we don't want to start sending old moves after un seating.
-							ClientData->AckMove(ClientData->SavedMoves.Num() - 1, *charMovement);
+							ClientData->AckMove(ClientData->SavedMoves.Num() - 1, *VRMovementReference);
 						}
 					}
 
@@ -455,7 +524,7 @@ void AVRBaseCharacter::InitSeatedModeTransition()
 			}
 			else
 			{
-				if (UVRBaseCharacterMovementComponent * charMovement = Cast<UVRBaseCharacterMovementComponent>(GetMovementComponent()))
+				if (VRMovementReference)
 				{
 					//charMovement->ApplyReplicatedMovementMode(SeatInformation.PostSeatedMovementMode);
 					//charMovement->bIgnoreClientMovementErrorChecksAndCorrection = false;
@@ -465,8 +534,8 @@ void AVRBaseCharacter::InitSeatedModeTransition()
 					{				
 						if (bUseExperimentalUnseatModeFix)
 						{
-							charMovement->bJustUnseated = true;
-							FNetworkPredictionData_Server_Character * ServerData = charMovement->GetPredictionData_Server_Character();
+							VRMovementReference->bJustUnseated = true;
+							FNetworkPredictionData_Server_Character * ServerData = VRMovementReference->GetPredictionData_Server_Character();
 							check(ServerData);
 							ServerData->CurrentClientTimeStamp = 0.0f;
 							ServerData->PendingAdjustment = FClientAdjustment();

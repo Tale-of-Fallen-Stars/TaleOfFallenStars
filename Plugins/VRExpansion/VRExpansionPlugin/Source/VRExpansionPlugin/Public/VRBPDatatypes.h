@@ -855,6 +855,7 @@ UENUM(Blueprintable)
 enum class EPhysicsGripConstraintType : uint8
 {
 	AccelerationConstraint = 0,
+	// Not available when not using Physx
 	ForceConstraint = 1
 };
 
@@ -882,6 +883,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PhysicsSettings")
 		bool bUsePhysicsSettings;
 
+	// Not available outside of physx, chaos has no force constraints and other plugin physics engines may not as well
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PhysicsSettings", meta = (editcondition = "bUsePhysicsSettings"))
 		EPhysicsGripConstraintType PhysicsConstraintType;
 
@@ -1206,6 +1208,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, NotReplicated, Category = "Settings")
 		bool bIsPaused;
 
+	// When true, will lock a hybrid grip into its collision state
+	UPROPERTY(BlueprintReadWrite, NotReplicated, Category = "Settings")
+		bool bLockHybridGrip;
+
 	// I would have loved to have both of these not be replicated (and in normal grips they wouldn't have to be)
 	// However for serialization purposes and Client_Authority grips they need to be....
 	UPROPERTY()
@@ -1280,6 +1286,7 @@ public:
 		bSkipNextTeleportCheck = false;
 		bSkipNextConstraintLengthCheck = false;
 		bIsPaused = false;
+		bLockHybridGrip = false;
 		AdditionTransform = FTransform::Identity;
 		GripDistance = 0.0f;
 
@@ -1379,6 +1386,7 @@ public:
 		SlotName(NAME_None),
 		GripMovementReplicationSetting(EGripMovementReplicationSettings::ForceClientSideMovement),
 		bIsPaused(false),
+		bLockHybridGrip(false),
 		bOriginalReplicatesMovement(false),
 		bOriginalGravity(false),
 		Damping(200.0f),
