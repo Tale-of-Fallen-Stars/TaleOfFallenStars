@@ -38,7 +38,7 @@
 /NODEFAULTLIB:"LIBCD"
 /NODEFAULTLIB:"LIBCPD"
 /FUNCTIONPADMIN
-"C:\Users\gilli\TaleOfFallenStars\Intermediate\Build\Win64\StarTaleEditor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h.obj"
+"C:\Users\gilli\TaleOfFallenStars\Intermediate\Build\Win64\UE4Editor\Development\UnrealEd\SharedPCH.UnrealEd.ShadowErrors.h.obj"
 "C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\VRExpansionPlugin\Module.VRExpansionPlugin.1_of_3.cpp.obj"
 "C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\VRExpansionPlugin\Module.VRExpansionPlugin.2_of_3.cpp.obj"
 "C:\Users\gilli\TaleOfFallenStars\Plugins\VRExpansion\VRExpansionPlugin\Intermediate\Build\Win64\UE4Editor\Development\VRExpansionPlugin\Module.VRExpansionPlugin.3_of_3.cpp.obj"
