@@ -77,3 +77,4 @@ DerivedDataCache/*
 
 # VRExpansion Source file for different os
 Plugins/VRExpansion/*
+Plugins/VRExpansionPlugin/*
