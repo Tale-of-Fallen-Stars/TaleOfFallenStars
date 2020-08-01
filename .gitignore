@@ -74,3 +74,6 @@ Plugins/*/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# VRExpansion Source file for different os
+Plugins/VRExpansion/*
